@@ -61,9 +61,17 @@ app.post('/api/upload', upload.array('files', 20), async (req, res) => {
       uploaded: inserted
     });
   } catch (err) {
-    console.error('Upload error:', err);
     res.status(500).json({ error: err.message });
   }
-})
+});
+
+app.get('/api/catalogue', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM uploads ORDER BY uploaded_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
