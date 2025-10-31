@@ -5,6 +5,7 @@ export default function Upload() {
   const [files, setFiles] = useState([]);
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [catalogue, setCatalogue] = useState([]);
 
   function addToState(e) {
     setFiles(Array.from(e.target.files));
@@ -39,6 +40,14 @@ export default function Upload() {
     }
   }
 
+  async function fetchCatalogue() {
+    setLoading(true);
+    const response = await fetch("/api/catalogue");
+    const jsonResponse = await response.json();
+    setCatalogue(jsonResponse);
+    setLoading(false);
+  }
+
   return (
     <div style={{ padding: 20, fontFamily: "sans-serif" }}>
       <h2>Upload Geospatial Files</h2>
@@ -56,6 +65,9 @@ export default function Upload() {
 
       <button onClick={upload} disabled={loading}>
         {loading ? "Processing..." : "Upload"}
+      </button>
+      <button onClick={fetchCatalogue} style={{ marginLeft: 8 }}>
+        Refresh Catalogue
       </button>
 
       <div style={{ marginTop: 10, color: "#7820ddff"}}>{status}</div>
@@ -83,11 +95,22 @@ export default function Upload() {
           </tr>
         </thread>
         <tbody>
+          {catalogue.map((c) => (
+            <tr key={c.id}>
+              <td>{c.id}</td>
+              <td>{c.original_name}</td>
+              <td>{c.file_type}</td>
+              <td>{c.status}</td>
+              <td>{new Date(c.uploaded_at).toLocaleString()}</td>
+            </tr>
+          ))}
+          {catalogue.length === 0 && (
             <tr>
               <td colSpan="6" style={{ textAlign: "center", color: "#666666ff" }}>
                 No uploads yet
               </td>
             </tr>
+          )}  
         </tbody>
       </table>
       
