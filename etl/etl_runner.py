@@ -15,6 +15,8 @@ def run_etl(file_path, file_id):
 
     if ext == "nc":
         return process_netcdf(file_path, file_id)
+    elif ext == "tif":
+        return process_tif(file_path, file_id)
     else:
         raise ValueError(f"Unsupported file type: {ext}")
 
