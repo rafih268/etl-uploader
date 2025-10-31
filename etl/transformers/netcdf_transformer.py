@@ -4,7 +4,7 @@ import json
 import os
 from config import DB_URL
 
-def process_netcdf(file_path):
+def process_netcdf(file_path, file_id):
   print(f"Processing NetCDF: {file_path}")
   ds = Dataset(file_path, 'r')
 
@@ -15,8 +15,9 @@ def process_netcdf(file_path):
   for var_name in variables:
     var_data = ds.variables[var_name][:]
     cur.execute(
-      "INSERT INTO uploads (filename, path, file_type, details) VALUES (%s, %s, %s, %s)",
-      (os.path.basename(file_path), file_path, 'netcdf', json.dumps({'variable': var_name, 'shape': str(var_data.shape)}))
+      "UPDATE uploads SET details=%s, status=%s WHERE id=%s",
+      (json.dumps({'variable': var_name, 'shape': str(var_data.shape)}),
+       "processed", file_id)
     )
 
   conn.commit()
