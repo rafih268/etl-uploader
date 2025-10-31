@@ -6,7 +6,9 @@ click==8.3.0
 click-plugins==1.1.1.2
 cligj==0.7.2
 colorama==0.4.6
+GeoAlchemy2==0.18.0
 geopandas==1.1.1
+greenlet==3.2.4
 netCDF4==1.7.3
 numpy==2.2.6
 packaging==25.0
@@ -20,4 +22,6 @@ pytz==2025.2
 rasterio==1.4.3
 shapely==2.1.2
 six==1.17.0
+SQLAlchemy==2.0.44
+typing_extensions==4.15.0
 tzdata==2025.2
