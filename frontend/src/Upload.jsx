@@ -84,7 +84,7 @@ export default function Upload() {
           fontSize: 14,
         }}
       >
-        <thread style={{ background: "#f0f0f038" }}>
+        <thead style={{ background: "#f0f0f038" }}>
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -93,7 +93,7 @@ export default function Upload() {
             <th>Uploaded At</th>
             <th>Actions</th>
           </tr>
-        </thread>
+        </thead>
         <tbody>
           {catalogue.map((c) => (
             <tr key={c.id}>
