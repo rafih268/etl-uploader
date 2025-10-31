@@ -48,6 +48,23 @@ export default function Upload() {
     setLoading(false);
   }
 
+  async function runETL(id) {
+    try {
+      setStatus(`Running ETL for file ID: ${id}`);
+      const response = await fetch(`/api/etl/${id}`, { method: "POST" });
+      const jsonResponse = await response.json();
+
+      if (!jsonResponse.error) {
+        setStatus(`ETL complete for file ${id}`);
+        fetchCatalogue;
+      } else {
+        setStatus(`ETL failed for file ${id}`);
+      }
+    } catch (err) {
+      setStatus(`Running ETL failed: ${err.message}`);
+    }
+  }
+
   return (
     <div style={{ padding: 20, fontFamily: "sans-serif" }}>
       <h2>Upload Geospatial Files</h2>
@@ -102,6 +119,9 @@ export default function Upload() {
               <td>{c.file_type}</td>
               <td>{c.status}</td>
               <td>{new Date(c.uploaded_at).toLocaleString()}</td>
+              <td>
+                <button onClick={() => runETL(c.id)}>Run ETL</button>
+              </td>
             </tr>
           ))}
           {catalogue.length === 0 && (
