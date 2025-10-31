@@ -57,11 +57,11 @@ app.post('/api/upload', upload.array('files', 20), async (req, res) => {
     }
 
     res.json({
-      message: 'File has been uploaded',
+      ok: true,
       uploaded: inserted
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ ok:false, error: err.message });
   }
 });
 
