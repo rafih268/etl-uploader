@@ -1,4 +1,9 @@
+from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-DB_URL = os.getenv("DATABASE_URL", "postgresql://etl_user:etl_pass@localhost:5432/etl_db")
-UPLOAD_DIR = os.getenv("UPLOAD_DIR", "../backend/src/uploads")
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
+
+DB_URL = os.getenv("DATABASE_URL", "postgresql://postgres@localhost:5432/raster_db")
+R2PGSQL_PATH = os.getenv("RASTER2PGSQL_PATH", "C:/Program Files/PostgreSQL/18/bin/raster2pgsql.exe")
