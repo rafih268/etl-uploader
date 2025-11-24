@@ -39,7 +39,7 @@ def get_tif_metadata(file_path):
 def import_to_postgis(file_path):
   raster_loader = find_raster2pgsql()
 
-  raster2pgsql_cmd = [raster_loader, "-s", SRID, "-I", "-C", "-M", file_path,
+  raster2pgsql_cmd = [raster_loader, "-s", SRID, "-I", "-C", "-M", "-t", "50x50", file_path,
                       f"{PG_SCHEMA}.{PG_TABLE}"]
 
   psql_cmd = ["psql", "-U", PG_USER, "-d", PG_DB, "-p", str(PG_PORT)]
